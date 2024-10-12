@@ -1,0 +1,50 @@
+<?php
+
+namespace App\Http\Resources;
+
+use Illuminate\Http\Resources\Json\JsonResource;
+use Carbon\Carbon;
+use App\Http\Resources\UserResource;
+use App\Models\Project;
+use App\Models\User;
+
+class ProjectResource extends JsonResource
+{
+    /**
+     * Transform the resource into an array.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
+     */
+    public function toArray($request)
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'description' => $this->description,
+            'created_at' => (new Carbon($this->created_at))->format('Y-m-d'),
+            'due_date' => (new Carbon($this->due_date))->format('Y-m-d'),
+            'status' => $this->status,
+            'image_path' => $this->image_path,
+            'createdBy' => new UserResource($this->createdBy),
+            'updatedBy' => new UserResource($this->updatedBy),
+           
+        ];
+
+       
+    }
+    public function project() {
+        return $this->belongsTo(Project::class);
+    }
+
+    public function createdBy(){
+        return $this->belongsTo(User::class, 'created_by');
+    }
+    public function updated(){
+        return $this->belongsTo(User::class, 'updated_by');
+    }
+
+    public function assignedUser() {
+        return $this->belongsTo(User::class, 'assigned_user_id');
+    }
+}
