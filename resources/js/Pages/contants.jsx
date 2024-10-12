@@ -23,7 +23,7 @@ export const TASK_STATUS_TEXT = {
 }
 
 export const TASK_PRIORITY_CLASS_MAP = {
-    'low' : 'bg-gary-600',
+    'low' : 'bg-gray-600',
     'medium' : 'bg-amber-600',
     'high' : 'bg-red-600'
 };

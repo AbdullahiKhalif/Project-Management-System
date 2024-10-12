@@ -1,11 +1,10 @@
 import Pagination from "@/Components/Pagination";
+import SelectInput from "@/Components/SelectInput.jsx";
+import TableHeading from "@/Components/TableHeading.jsx";
+import TextInput from "@/Components/TextInput.jsx";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, router } from "@inertiajs/react";
 import { PROJECT_STATUS_CLASS_MAP, PROJECT_STATUS_TEXT } from "../contants.jsx";
-import TextInput from "@/Components/TextInput.jsx";
-import SelectInput from "@/Components/SelectInput.jsx";
-import { ChevronUpIcon, ChevronDownIcon } from "@heroicons/react/16/solid";
-import TableHeading from "@/Components/TableHeading.jsx";
 
 export default function Index({ auth, projects, errors, queryParams = null }) {
     queryParams = queryParams || {};

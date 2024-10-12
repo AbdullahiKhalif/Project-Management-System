@@ -1,11 +1,10 @@
 import Pagination from "@/Components/Pagination";
+import SelectInput from "@/Components/SelectInput.jsx";
+import TableHeading from "@/Components/TableHeading.jsx";
+import TextInput from "@/Components/TextInput.jsx";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, router } from "@inertiajs/react";
-import { TASK_STATUS_CLASS_MAP, TASK_STATUS_TEXT } from "../contants.jsx";
-import TextInput from "@/Components/TextInput.jsx";
-import SelectInput from "@/Components/SelectInput.jsx";
-import { ChevronUpIcon, ChevronDownIcon } from "@heroicons/react/16/solid";
-import TableHeading from "@/Components/TableHeading.jsx";
+import { TASK_STATUS_CLASS_MAP, TASK_STATUS_TEXT, TASK_PRIORITY_CLASS_MAP, TASK_PRIORITY_STATUS_TEXT } from "../contants.jsx";
 
 export default function Index({ auth, tasks, errors, queryParams = null }) {
     queryParams = queryParams || {};
@@ -58,16 +57,13 @@ export default function Index({ auth, tasks, errors, queryParams = null }) {
                         <div className="p-6 text-gray-900 dark:text-gray-100">
                             <div className="overflow-auto">
                                 <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                    {/* Table Headings */}
                                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 border-b-2 border-gray-500">
                                         <tr className="text-nowrap">
                                             <TableHeading
                                                 name="id"
-                                                sort_field={
-                                                    queryParams.sort_field
-                                                }
-                                                sort_direction={
-                                                    queryParams.sort_direction
-                                                }
+                                                sort_field={queryParams.sort_field}
+                                                sort_direction={queryParams.sort_direction}
                                                 sortChanged={sortChanged}
                                             >
                                                 ID
@@ -75,48 +71,32 @@ export default function Index({ auth, tasks, errors, queryParams = null }) {
                                             <th>Image</th>
                                             <TableHeading
                                                 name="name"
-                                                sort_field={
-                                                    queryParams.sort_field
-                                                }
-                                                sort_direction={
-                                                    queryParams.sort_direction
-                                                }
+                                                sort_field={queryParams.sort_field}
+                                                sort_direction={queryParams.sort_direction}
                                                 sortChanged={sortChanged}
                                             >
                                                 Name
                                             </TableHeading>
                                             <TableHeading
                                                 name="status"
-                                                sort_field={
-                                                    queryParams.sort_field
-                                                }
-                                                sort_direction={
-                                                    queryParams.sort_direction
-                                                }
+                                                sort_field={queryParams.sort_field}
+                                                sort_direction={queryParams.sort_direction}
                                                 sortChanged={sortChanged}
                                             >
-                                                STATUS
+                                                Status
                                             </TableHeading>
                                             <TableHeading
                                                 name="priority"
-                                                sort_field={
-                                                    queryParams.sort_field
-                                                }
-                                                sort_direction={
-                                                    queryParams.sort_direction
-                                                }
+                                                sort_field={queryParams.sort_field}
+                                                sort_direction={queryParams.sort_direction}
                                                 sortChanged={sortChanged}
                                             >
-                                                priority
+                                                Priority
                                             </TableHeading>
                                             <TableHeading
                                                 name="created_at"
-                                                sort_field={
-                                                    queryParams.sort_field
-                                                }
-                                                sort_direction={
-                                                    queryParams.sort_direction
-                                                }
+                                                sort_field={queryParams.sort_field}
+                                                sort_direction={queryParams.sort_direction}
                                                 sortChanged={sortChanged}
                                             >
                                                 Create Date
@@ -124,22 +104,17 @@ export default function Index({ auth, tasks, errors, queryParams = null }) {
                                             <th>Created By</th>
                                             <TableHeading
                                                 name="due_date"
-                                                sort_field={
-                                                    queryParams.sort_field
-                                                }
-                                                sort_direction={
-                                                    queryParams.sort_direction
-                                                }
+                                                sort_field={queryParams.sort_field}
+                                                sort_direction={queryParams.sort_direction}
                                                 sortChanged={sortChanged}
                                             >
                                                 Due Date
                                             </TableHeading>
-                                            <th className="p-3 text-right">
-                                                Actions
-                                            </th>
+                                            <th className="p-3 text-right">Actions</th>
                                         </tr>
                                     </thead>
 
+                                    {/* Filter Inputs */}
                                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 border-b-2 border-gray-500">
                                         <tr className="text-nowrap">
                                             <th className="p-3"></th>
@@ -148,47 +123,24 @@ export default function Index({ auth, tasks, errors, queryParams = null }) {
                                                 <TextInput
                                                     className="w-full"
                                                     placeholder="Project Name"
-                                                    defaultValue={
-                                                        queryParams.name
-                                                    }
-                                                    OnBlur={(e) =>
-                                                        searchFieldChanged(
-                                                            "name",
-                                                            e.target.value
-                                                        )
-                                                    }
-                                                    onKeyPress={(e) =>
-                                                        onKeyPress("name", e)
-                                                    }
+                                                    defaultValue={queryParams.name}
+                                                    onBlur={(e) => searchFieldChanged("name", e.target.value)}
+                                                    onKeyPress={(e) => onKeyPress("name", e)}
                                                 />
                                             </th>
                                             <th className="p-3">
                                                 <SelectInput
                                                     className="w-full"
-                                                    defaultValue={
-                                                        queryParams.status
-                                                    }
-                                                    onChange={(e) =>
-                                                        searchFieldChanged(
-                                                            "status",
-                                                            e.target.value
-                                                        )
-                                                    }
+                                                    defaultValue={queryParams.status}
+                                                    onChange={(e) => searchFieldChanged("status", e.target.value)}
                                                 >
-                                                    <option value="">
-                                                        Select Status
-                                                    </option>
-                                                    <option value="pending">
-                                                        Pending
-                                                    </option>
-                                                    <option value="in_progress">
-                                                        In Progress
-                                                    </option>
-                                                    <option value="complete">
-                                                        Completed
-                                                    </option>
+                                                    <option value="">Select Status</option>
+                                                    <option value="pending">Pending</option>
+                                                    <option value="in_progress">In Progress</option>
+                                                    <option value="complete">Completed</option>
                                                 </SelectInput>
                                             </th>
+                                            <th className="p-3"></th>
                                             <th className="p-3"></th>
                                             <th className="p-3"></th>
                                             <th className="p-3"></th>
@@ -196,15 +148,14 @@ export default function Index({ auth, tasks, errors, queryParams = null }) {
                                         </tr>
                                     </thead>
 
+                                    {/* Table Body */}
                                     <tbody>
                                         {tasks.data.map((task) => (
                                             <tr
                                                 className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
                                                 key={task.id}
                                             >
-                                                <td className="px-3 py-2">
-                                                    {task.id}
-                                                </td>
+                                                <td className="px-3 py-2">{task.id}</td>
                                                 <td className="px-3 py-2">
                                                     <img
                                                         src={task.image_path}
@@ -212,66 +163,40 @@ export default function Index({ auth, tasks, errors, queryParams = null }) {
                                                         style={{ width: 60 }}
                                                     />
                                                 </td>
-                                                <td className="px-3 py-2">
-                                                    {task.name}
-                                                </td>
+                                                <td className="px-3 py-2">{task.name}</td>
                                                 <td className="px-3 py-2">
                                                     <span
                                                         className={
                                                             "px-2 py-1 rounded text-white " +
-                                                            TASK_STATUS_CLASS_MAP[
-                                                                task.status
-                                                            ]
+                                                            TASK_STATUS_CLASS_MAP[task.status]
                                                         }
                                                     >
-                                                        {
-                                                            TASK_STATUS_TEXT[
-                                                                task.status
-                                                            ]
-                                                        }
+                                                        {TASK_STATUS_TEXT[task.status]}
                                                     </span>
                                                 </td>
                                                 <td className="px-3 py-2">
                                                     <span
                                                         className={
                                                             "px-2 py-1 rounded text-white " +
-                                                            TASK_STATUS_CLASS_MAP[
-                                                                task.priority
-                                                            ]
+                                                            TASK_PRIORITY_CLASS_MAP[task.priority]
                                                         }
                                                     >
-                                                        {
-                                                            TASK_STATUS_TEXT[
-                                                                task.priority
-                                                            ]
-                                                        }
+                                                        {TASK_PRIORITY_STATUS_TEXT[task.priority]}
                                                     </span>
                                                 </td>
-                                                <td className="px-3 py-2">
-                                                    {task.created_at}
-                                                </td>
-                                                <td className="px-3 py-2">
-                                                    {task.createdBy.name}
-                                                </td>
-                                                <td className="px-3 py-2">
-                                                    {task.due_date}
-                                                </td>
-                                                <td className="px-3 py-2">
+                                                <td className="px-3 py-2">{task.created_at}</td>
+                                                <td className="px-3 py-2">{task.createdBy.name}</td>
+                                                <td className="px-3 py-2">{task.due_date}</td>
+                                                <td className="px-3 py-2 text-right">
                                                     <Link
-                                                        href={route(
-                                                            "task.edit",
-                                                            task.id
-                                                        )}
+                                                        href={route("task.edit", task.id)}
                                                         className="font-medium text-blue-600 dark:text-blue-500 hover:underline mx-1"
                                                     >
                                                         Edit
                                                     </Link>
 
                                                     <Link
-                                                        href={route(
-                                                            "task.destroy",
-                                                            task.id
-                                                        )}
+                                                        href={route("task.destroy", task.id)}
                                                         className="font-medium text-red-600 dark:text-red-500 hover:underline mx-1"
                                                     >
                                                         Delete
